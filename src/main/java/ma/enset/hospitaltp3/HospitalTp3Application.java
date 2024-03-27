@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
+import java.util.stream.Stream;
 
 @SpringBootApplication
-public class HospitalTp3Application implements CommandLineRunner {
+public class HospitalTp3Application  {
     @Autowired
     private PatientRepository patientRepository;
 
@@ -19,27 +21,30 @@ public class HospitalTp3Application implements CommandLineRunner {
     }
 
 
-    @Override
-    public void run(String... args) throws Exception {
-        Patient patient = new Patient();
-        patient.setId(null);
-        patient.setNom("mohammed");
-        patient.setDateNaissace(new Date());
-        patient.setMalade(false);
-        patient.setScore(55);
+  //@Bean
+    CommandLineRunner commandLineRunner( PatientRepository patientRepository) {
+        return args -> {
 
-        Patient patient2 = new Patient(null, "hanan", new Date(), false, 100);
-        //En utilisant Builder
-        Patient patient3 = Patient.builder()
-                .nom("ahlam")
-                .dateNaissace(new Date())
-                .score(99)
-                .malade(true)
-                .build();
+            Patient patient = new Patient();
+            patient.setId(null);
+            patient.setNom("mohammed");
+            patient.setDateNaissance(new Date());
+            patient.setMalade(false);
+            patient.setScore(333);
 
-        patientRepository.save(patient);
-        patientRepository.save(patient2);
-        patientRepository.save(patient3);
+            Patient patient2 = new Patient(null, "hanan", new Date(), false, 120);
+            //En utilisant Builder
+            Patient patient3 = Patient.builder()
+                    .nom("ahlam")
+                    .dateNaissance(new Date())
+                    .score(250)
+                    .malade(true)
+                    .build();
 
+            patientRepository.save(patient);
+            patientRepository.save(patient2);
+            patientRepository.save(patient3);
+
+        };
     }
 }
